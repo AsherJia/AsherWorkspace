@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Example1</title>
+	<script type="text/javascript" src="assets/js/angular.js"></script>
+</head>
+<body ng-app="testDirective">
+	<div ng-init="userName='Asher'">
+		userName: <input type="text" ng-model="userName"/><br/>
+		input: {{userName}}
+	</div>
+	<div ng-init="weeks=['Monday', 'Tuesday', 'Wednesday', 'ThursDay', 'FriDay']">
+		<ul>
+			<li ng-repeat="day in weeks">
+				{{ day }}
+			</li>
+		</ul>
+	</div>
+	<div>
+		<!-- directive: user-login -->
+	</div>
+	<script type="text/javascript">
+		var app = angular.module("testDirective", []);
+		app.directive("userLogin", function() {
+			return {
+				restrict : "M",
+        		replace : true,
+				template : "<div>" +
+					"UserName: <input type='text'><br/>" +
+					"Password: <input type='password'>" +
+					"</div>"
+			}
+		});
+	</script>
+
+	<div ng-init="quantity=10; price=12">
+		<input type="number" ng-model="quantity">
+		<input type="number" ng-model="price">
+
+		<p>总价 = {{ (quantity * price) | currency }}</p>
+	</div>
+
+	<div ng-controller="myCtrl">
+		<h2>{{ time }}</h2>
+	</div>
+	<script type="text/javascript">
+		var app1 = angular.module("testDirective", []);
+		app1.controller("myCtrl", function($scope, $interval){
+			$scope.time = new Date().toLocaleTimeString();
+			$interval(function(){
+				$scope.time = new Date().toLocaleTimeString();
+			}, 1000);
+		});
+	</script>
+</body>
+</html>
