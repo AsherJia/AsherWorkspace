@@ -14,10 +14,14 @@ var plugins = [
             warnings: false, // Suppress uglification warnings
         },
     }),
-    new ExtractPlugin('bundle.css', {allChunks: true}),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"development"'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractPlugin('bundle.css', {allChunks: true})
 ];
 
-if (production) {
+if (false) {
     plugins = plugins.concat([
 
         // This plugin looks for similar chunks and files
@@ -61,14 +65,14 @@ module.exports = {
     debug:   false,
     devtool: production ? false : 'eval',
     entry: [
-        //'webpack-dev-server/client?http://1.0.0.1:8080', // WebpackDevServer host and port
-        //'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+        'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
+        'webpack/hot/only-dev-server',
         './src'
       ],
     output: {
     	path: __dirname + "/builds",
         filename: 'bundle.js',
-        publicPath: 'builds/'
+        publicPath: 'http://localhost:8080/builds/'
     },
     module:{
     	loaders: [
@@ -106,3 +110,4 @@ module.exports = {
     },
     plugins: plugins,
 };
+
